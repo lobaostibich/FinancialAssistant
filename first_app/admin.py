@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from first_app.models import GroceryList, BudgetControl
+from first_app.models import BudgetControl
 
-admin.site.register(GroceryList)
 admin.site.register(BudgetControl)

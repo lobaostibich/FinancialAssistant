@@ -3,8 +3,6 @@
 {% block content %}
 
 <main role="main">
-
-  <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
         <div class="container">
             <h1 class="display-3">
@@ -17,7 +15,6 @@
     </div>
 
     <div class="container">
-        <!-- Example row of columns -->
         <div class="row">
             <div class="col-md-6">
                 <h2>
@@ -27,7 +24,7 @@
                     TODO Colocar aqui explicação de como funciona o Time Mangement 
                 </p>
                 <p>
-                    <a class="btn btn-primary btn-lg" href="#" role="button">
+                    <a class="btn btn-primary btn-lg" href="{% url 'time' %}" role="button">
                         Time Management &raquo;
                     </a>
                 </p>
@@ -40,17 +37,14 @@
                     TODO Colocar aqui explicação de como funciona o Budget Control
                 </p>
                 <p>
-                    <a class="btn btn-primary btn-lg" href="#" role="button">
+                    <a class="btn btn-primary btn-lg" href="{% url 'budget' %}" role="button">
                         Budget Control &raquo;
                     </a>
                 </p>
             </div>
         </div>
-
         <hr>
-
-    </div> <!-- /container -->
-
+    </div>
 </main>
 
 {% endblock %}

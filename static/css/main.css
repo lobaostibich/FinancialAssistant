@@ -6,12 +6,12 @@ body{
     background-color: #ebeff5;
 }
 
-#monthly-return{
+#investments-total{
     background-color: #4cb4c7;
 }
 
-#annual-return{
-    background-color: #7abecc;
+#spends-total{
+    background-color: #cc7a7a;
 }
 
 #goods-total{
