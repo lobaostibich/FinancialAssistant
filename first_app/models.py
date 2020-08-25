@@ -25,6 +25,8 @@ class BudgetControl(models.Model):
         ('Good', 'GOOD')
     ]
 
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+
     name = models.CharField(
         #verbose_name='Name:',
         max_length=255,

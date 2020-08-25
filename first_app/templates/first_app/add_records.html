@@ -1,0 +1,24 @@
+{% extends 'first_app/main.html' %}
+
+{% block content %}
+
+<form method="POST" action="">
+
+    {% csrf_token %}
+    {{form.name.label}}
+    {{form.name}}
+
+    {{form.category.label}}
+    {{form.category}}
+
+    {{form.value.label}}
+    {{form.value}}
+
+    {{form.month.label}}
+    {{form.month}}
+
+    <input class="btn" type="submit" name="submit">
+
+</form>
+
+{% endblock %}
