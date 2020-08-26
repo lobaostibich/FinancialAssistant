@@ -17,7 +17,7 @@ def authenticated_user(function):
     def wrapper_function(request, *args, **kwargs):
         if request.user.is_authenticated:
             #TODO colocar mensagem informando que o usuário já está logado
-            return redirect("budget")
+            return redirect('budget')
         else:
             return function(request, *args, **kwargs)
     return wrapper_function

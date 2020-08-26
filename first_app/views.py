@@ -1,9 +1,8 @@
 from datetime import datetime
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 #from django.forms import inlineformset_factory
-from django.urls import reverse
 from django.db.models import Sum
 
 from first_app.models import BudgetControl
@@ -31,18 +30,20 @@ def budget_control(request):
             10: 'NOV',
             11: 'DEC'
     }
+    #gets the actual user
+    actual_user = request.user
     #gets record from the database
-    budget_registers = BudgetControl.objects.all()
+    budget_registers = BudgetControl.objects.filter(user=actual_user)
     #calculates the sum of the goods
-    goods_sum = BudgetControl.objects.filter(category='Good').aggregate(Sum('value'))['value__sum']
+    goods_sum = budget_registers.filter(category='Good').aggregate(Sum('value'))['value__sum']
     #calculates the investments total value
-    investments_sum = BudgetControl.objects.filter(category='Investment', month=months[today_month-1]).aggregate(Sum('value'))['value__sum']
+    investments_sum = budget_registers.filter(category='Investment', month=months[today_month-1]).aggregate(Sum('value'))['value__sum']
     
     #calculates the total profit, total spends and sum for each month
     for month in range(12):
         result.append([0,0,0])
-        profits = BudgetControl.objects.filter(category='Profit', month=months[month]).aggregate(Sum('value'))['value__sum']
-        spends = BudgetControl.objects.filter(category='Spend', month=months[month]).aggregate(Sum('value'))['value__sum']        
+        profits = budget_registers.filter(category='Profit', month=months[month]).aggregate(Sum('value'))['value__sum']
+        spends = budget_registers.filter(category='Spend', month=months[month]).aggregate(Sum('value'))['value__sum']        
         if profits:
             result[month][0] = int(profits)
         if spends:
@@ -50,7 +51,7 @@ def budget_control(request):
         result[month][2] = result[month][0]-result[month][1]
 
     #calculates the annual total spends
-    spends_sum = BudgetControl.objects.filter(category='Spend').aggregate(Sum('value'))['value__sum']
+    spends_sum = budget_registers.filter(category='Spend').aggregate(Sum('value'))['value__sum']
 
     #check if goods_sum is an empty value
     if goods_sum:
@@ -80,12 +81,13 @@ def budget_control(request):
 
 @unauthenticated_user
 def add_record(request):
-    #user = request.user.id
-    form = BudgetControlForm()
+    record = BudgetControl(user=request.user)
+    form = BudgetControlForm(instance=record)
     if request.method == "POST":
-        form = BudgetControlForm(request.POST)
+        form = BudgetControlForm(request.POST, instance=record)
         if form.is_valid():
             form.save()
+            return redirect('budget')
 
     context = {'form':form}
     return render(request, 'first_app/add_records.html', context)
@@ -94,21 +96,21 @@ def add_record(request):
 def update_record(request, pk):
     record = BudgetControl.objects.get(id=pk)
     form = BudgetControlForm(instance=record)
-    context = {'form':form}
     if request.method == "POST":
         form = BudgetControlForm(request.POST, instance=record)
         if form.is_valid():
             form.save()
-            return render(request, 'first_app/budget_control.html', context)
+            return redirect('budget')
 
+    context = {'form':form}
     return render(request, 'first_app/add_records.html', context)
 
 @unauthenticated_user
 def delete_record(request, pk):
     record = BudgetControl.objects.get(id=pk)
-    context = {'item':record}
     if request.method == "POST":
         record.delete()
         return redirect("budget")
 
+    context = {'item':record}
     return render(request, "first_app/delete.html", context)

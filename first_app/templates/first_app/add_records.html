@@ -5,6 +5,11 @@
 <form method="POST" action="">
 
     {% csrf_token %}
+    <p style="display:none;">
+        {{form.user.label}}
+        {{form.user}}
+    </p>
+
     {{form.name.label}}
     {{form.name}}
 
