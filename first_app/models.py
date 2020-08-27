@@ -25,10 +25,12 @@ class BudgetControl(models.Model):
         ('Good', 'GOOD')
     ]
 
-    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-
+    user = models.ForeignKey(
+        User, 
+        null=True, 
+        on_delete=models.CASCADE
+    )
     name = models.CharField(
-        #verbose_name='Name:',
         max_length=255,
         null=True
     )
@@ -38,12 +40,10 @@ class BudgetControl(models.Model):
         null=True
     )
     value = models.FloatField(
-        #verbose_name='Value of the expense:',
-        default=0.0,
+        #default=0.0,
         null=True
     )
     month = models.CharField(
-        #verbose_name='Month of the expense:',
         max_length=3,
         choices=months,
         null=True,

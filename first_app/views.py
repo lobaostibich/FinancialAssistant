@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import messages
 #from django.forms import inlineformset_factory
@@ -81,15 +82,29 @@ def budget_control(request):
 
 @unauthenticated_user
 def add_record(request):
+    '''
+    AddRecordFormSet = inlineformset_factory(User,
+                                             BudgetControl,
+                                             extra=10,
+                                             fields=('name',
+                                                     'category',
+                                                     'value',
+                                                     'month'))
+    record = User.objects.get(id=pk)
+    '''
     record = BudgetControl(user=request.user)
+    #formset = AddRecordFormSet(instance=record)
     form = BudgetControlForm(instance=record)
     if request.method == "POST":
         form = BudgetControlForm(request.POST, instance=record)
+        #formset = AddRecordFormSet(request.POST, instance=record)
         if form.is_valid():
             form.save()
             return redirect('budget')
 
-    context = {'form':form}
+    context = {'form':form,
+               'operation_type':'Add'
+    }
     return render(request, 'first_app/add_records.html', context)
 
 @unauthenticated_user
@@ -102,7 +117,9 @@ def update_record(request, pk):
             form.save()
             return redirect('budget')
 
-    context = {'form':form}
+    context = {'form':form,
+               'operation_type':'Update'
+    }
     return render(request, 'first_app/add_records.html', context)
 
 @unauthenticated_user

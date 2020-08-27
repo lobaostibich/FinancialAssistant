@@ -18,8 +18,7 @@ def login_view(request):
             login(request, user)
             return redirect("budget")
         else:
-            #TODO mostrar mensagem informando que o nome de usuário ou senha estão incorretos
-            messages.info(request, 'Incorrect Username or Password.')
+            messages.error(request, 'Incorrect Username or Password.')
 
     return render(request, "users/login.html")
 
