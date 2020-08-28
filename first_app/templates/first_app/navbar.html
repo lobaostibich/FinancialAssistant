@@ -1,9 +1,9 @@
-<!--{% load static %}-->
+<!-- {% load static %} -->
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <!-- <img src="{% static 'images/logo.png' %}">-->
+    <!-- <img src="{% static 'images/icon.png' %}" width="24" height="24"> -->
     <a class="navbar-brand" href="{% url 'budget' %}">
-        Management Tools
+        Assistente Financeiro
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon">
@@ -12,18 +12,23 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">
-                    Home
+                <a class="nav-link" href="{% url 'budget' %}">
+                    Dashboard orçamentário
                 </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'budget' %}">
-                    Budget Control
+                <a class="nav-link" href="{% url 'help' %}">
+                    Ajuda
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="">
+                    Inserir dados
                 </a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'logout' %}">
-                    Logout
+                    Sair
                 </a>
             </li>
         </ul>

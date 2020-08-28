@@ -43,4 +43,4 @@ def logout_view(request):
     logout(request)
     #TODO mostrar mensagem avisando que o logout foi bem sucedido
 
-    return redirect('home')
+    return redirect('login')

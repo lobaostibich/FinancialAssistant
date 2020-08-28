@@ -1,0 +1,143 @@
+{% extends 'first_app/template.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% include 'first_app/navbar.html' %}
+
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">
+        Olá {{username}}!
+    </h1>
+    <p class="lead">
+        Para tornar mais fácil para você inserir dados na plataforma, vamos iniciar cadastrando algumas informações, como mostra o exemplo abaixo.
+    </p>
+</div>
+<br>
+<hr>
+<div id="table-center" class="row">
+    <div class="col">
+        <div class="col-md">
+            <div class="table-responsive">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Fixo ou variável?</th>
+                            <th scope="col">Mês de início</th>
+                            <th scope="col">Valor</th>
+                            <th style="color:red" scope="col">Deletar Linha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Salário Empresa 1</td>
+                            <td>Receita</td>
+                            <td>Fixo</td>
+                            <td>Janeiro</td>
+                            <td>4000</td>
+                            <td><img id="trash" src="{% static 'images/delete.png' %}" width="24" height="24"></td>
+                        </tr>
+                        <tr>
+                            <td>Venda de doces</td>
+                            <td>Receita</td>
+                            <td>Variável</td>
+                            <td>Agosto</td>
+                            <td>1000</td>
+                            <td><img id="trash" src="{% static 'images/delete.png' %}" width="24" height="24"></td>
+                        </tr>
+                        <tr>
+                            <td>Aluguel</td>
+                            <td>Despesa</td>
+                            <td>Fixo</td>
+                            <td>Janeiro</td>
+                            <td>2000</td>
+                            <td><img id="trash" src="{% static 'images/delete.png' %}" width="24" height="24"></td>
+                        </tr>
+                        <tr>
+                            <td>CDB Banco X</td>
+                            <td>Investimento</td>
+                            <td>Variável</td>
+                            <td>Fevereiro</td>
+                            <td>500</td>
+                            <td><img id="trash" src="{% static 'images/delete.png' %}" width="24" height="24"></td>
+                        </tr>
+                        <tr>
+                            <td>Carro</td>
+                            <td>Bem</td>
+                            <td>Fixo</td>
+                            <td>Agosto</td>
+                            <td>45000</td>
+                            <td><img id="trash" src="{% static 'images/delete.png' %}" width="24" height="24"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center links">
+            <a href="" class="ml-2">
+                <button type="button" class="btn btn-info" disabled>
+                    Adicionar Linha
+                </button>
+            </a>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center links">
+            <a href="" class="ml-2">
+                <button type="button" class="btn btn-success" disabled>
+                    Salvar Registros
+                </button>
+            </a>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center links">
+            <a href="{% url 'add' %}" class="ml-2">
+                <button type="button" class="btn btn-info">
+                    Começar a inserir dados
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="table-center" class="row">
+    <div class="col">
+        <div class="my-3 p-3 bg-white rounded box-shadow">
+            <h6 class="border-bottom border-gray pb-2 mb-0">Dicas:</h6>
+            <div class="media text-muted pt-3">
+                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <strong class="text-gray-dark">Deletar Linha</strong>
+                    </div>
+                    <span class="d-block">Ao clicar na lixeira que aparece na coluna deletar linha, você apaga a linha</span>
+                </div>
+            </div>
+            <div class="media text-muted pt-3">
+                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <strong class="text-gray-dark">Full Name</strong>
+                        <a href="#">Follow</a>
+                    </div>
+                    <span class="d-block">@username</span>
+                </div>
+            </div>
+            <div class="media text-muted pt-3">
+                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <strong class="text-gray-dark">Full Name</strong>
+                        <a href="#">Follow</a>
+                    </div>
+                    <span class="d-block">@username</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+{% endblock %}

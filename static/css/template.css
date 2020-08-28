@@ -51,7 +51,7 @@ body {
 
 .login_btn {
     width: 100%;
-    background: #33ccff !important;
+    background: #0051ff !important;
     color: white !important;
 }
 
@@ -71,14 +71,31 @@ body {
     border-radius: 0.25rem 0 0 0.25rem !important;
 }
 
-.input_user, .input_pass:focus {
+.input_user,
+.input_pass:focus {
     box-shadow: none !important;
     outline: 0px !important;
 }
 
-#messages {
-    background-color: grey;
-    color: #fff;
-    padding: 10px;
-    margin-top: 10px;
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #ebeff5;
+}
+
+.display-3 {
+    color: #50df08;
+}
+
+#trash {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#table-center {
+    margin: auto;
+    width: 65%;
 }

@@ -11,25 +11,29 @@ from users.forms import BudgetControlForm
 from users.decorators import unauthenticated_user
 
 
-def home(request):
-    return render(request, 'first_app/home.html')
+@unauthenticated_user
+def help_view(request):
+    context = {
+        'username':request.user.username.capitalize()
+    }
+    return render(request, 'first_app/help.html', context)
 
 @unauthenticated_user
 def budget_control(request):
     result = []
     today_month = datetime.today().month
     months = {0: 'JAN',
-            1: 'FEB',
-            2: 'MAR',
-            3: 'APR',
-            4: 'MAY',
-            5: 'JUN',
-            6: 'JUL',
-            7: 'AUG',
-            8: 'SEP',
-            9: 'OCT',
-            10: 'NOV',
-            11: 'DEC'
+              1: 'FEB',
+              2: 'MAR',
+              3: 'APR',
+              4: 'MAY',
+              5: 'JUN',
+              6: 'JUL',
+              7: 'AUG',
+              8: 'SEP',
+              9: 'OCT',
+              10: 'NOV',
+              11: 'DEC'
     }
     #gets the actual user
     actual_user = request.user
