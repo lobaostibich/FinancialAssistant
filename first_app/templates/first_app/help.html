@@ -6,13 +6,14 @@
 
 {% include 'first_app/navbar.html' %}
 
-
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">
         Olá {{username}}!
     </h1>
     <p class="lead">
         Para tornar mais fácil para você inserir dados na plataforma, vamos iniciar cadastrando algumas informações, como mostra o exemplo abaixo.
+        <br>
+        Se você já sabe como funciona o site clique no botão "Começar a inserir dados".
     </p>
 </div>
 <br>
@@ -118,19 +119,25 @@
             <div class="media text-muted pt-3">
                 <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <div class="d-flex justify-content-between align-items-center w-100">
-                        <strong class="text-gray-dark">Full Name</strong>
-                        <a href="#">Follow</a>
+                        <strong class="text-gray-dark">Fixo ou variável?</strong>
                     </div>
-                    <span class="d-block">@username</span>
+                    <span class="d-block">Colocando um registro como fixo, ele aparecerá pronto para você na próxima vez que for inserir dados novos</span>
                 </div>
             </div>
             <div class="media text-muted pt-3">
                 <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <div class="d-flex justify-content-between align-items-center w-100">
-                        <strong class="text-gray-dark">Full Name</strong>
-                        <a href="#">Follow</a>
+                        <strong class="text-gray-dark">Adicionar Linha</strong>
                     </div>
-                    <span class="d-block">@username</span>
+                    <span class="d-block">Ao clicar no botão "Adicionar Linha" você adiciona uma nova linha de inserção de dados</span>
+                </div>
+            </div>
+            <div class="media text-muted pt-3">
+                <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <div class="d-flex justify-content-between align-items-center w-100">
+                        <strong class="text-gray-dark">Salvar Registros</strong>
+                    </div>
+                    <span class="d-block">Ao clicar em salvar registros, os registros são processados para que você possa visualizar os dados no dashboard</span>
                 </div>
             </div>
         </div>
