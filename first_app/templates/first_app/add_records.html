@@ -19,30 +19,30 @@
             {% csrf_token %}
 
             <div class="col-md">
-                    <div class="table-responsive">
-                        <table class="table table-dark">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Nome</th>
-                                    <th scope="col">Categoria</th>
-                                    <th scope="col">Fixo ou variável?</th>
-                                    <th scope="col">Mês de início</th>
-                                    <th scope="col">Valor</th>
-                                    <th style="color:red" scope="col">Deletar Linha</th>
-                                </tr>
-                            </thead>
-                            <tbody id="registers">
-                                <tr>
-                                    <td>Salário Empresa 1</td>
-                                    <td>Receita</td>
-                                    <td>Fixo</td>
-                                    <td>Janeiro</td>
-                                    <td>4000</td>
-                                    <td><img id="trash" src="{% static 'images/delete.png' %}" width="24" height="24"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="table-responsive">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Fixo ou variável?</th>
+                                <th scope="col">Mês de início</th>
+                                <th scope="col">Valor</th>
+                                <th style="color:red" scope="col">Deletar Linha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Salário Empresa 1</td>
+                                <td>Receita</td>
+                                <td>Fixo</td>
+                                <td>Janeiro</td>
+                                <td>4000</td>
+                                <td><a id="delete-row"><img id="trash" src="{% static 'images/delete.png' %}" width="24" height="24"></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="d-flex justify-content-center links">
                 <a id="add-row" class="ml-2">
