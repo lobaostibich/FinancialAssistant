@@ -26,8 +26,8 @@
                                 <th scope="col">Nome</th>
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Fixo ou variável?</th>
-                                <th scope="col">Mês de início</th>
                                 <th scope="col">Valor</th>
+                                <th scope="col">Mês</th>
                                 <th style="color:red" scope="col">Deletar Linha</th>
                             </tr>
                         </thead>
@@ -36,17 +36,17 @@
                                 <td>Salário Empresa 1</td>
                                 <td>Receita</td>
                                 <td>Fixo</td>
-                                <td>Janeiro</td>
                                 <td>4000</td>
-                                <td><a id="delete-row"><img id="trash" src="{% static 'images/delete.png' %}" width="24" height="24"></a></td>
+                                <td>Agosto</td>
+                                <td><button class="delete-row" onclick="deleteRow(this)"><img id="trash" src="{% static 'images/delete.png' %}" width="24" height="24"></button></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="d-flex justify-content-center links">
-                <a id="add-row" class="ml-2">
-                    <button type="button" class="btn btn-info">
+                <a class="ml-2">
+                    <button type="button" class="btn btn-info" onclick="addRow()">
                         Adicionar Linha
                     </button>
                 </a>
@@ -62,5 +62,7 @@
         </form>
     </div>
 </div>
+
+<script src="{% static '/js/add_delete_row.js' %}"></script>
 
 {% endblock %}
