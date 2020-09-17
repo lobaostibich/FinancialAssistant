@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 
-from first_app.models import BudgetControl
+from first_app.models import BudgetControl, FixedValues
 
 
 class CreateUserForm(UserCreationForm):
@@ -12,6 +12,11 @@ class CreateUserForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 class BudgetControlForm(ModelForm):
+    class Meta:
+        model = BudgetControl
+        fields = '__all__'
+
+class FixedValuesForm(ModelForm):
     class Meta:
         model = BudgetControl
         fields = '__all__'

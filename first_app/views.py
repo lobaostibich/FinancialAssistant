@@ -6,8 +6,8 @@ from django.contrib import messages
 #from django.forms import inlineformset_factory
 from django.db.models import Sum
 
-from first_app.models import BudgetControl
-from users.forms import BudgetControlForm
+from first_app.models import BudgetControl, FixedValues
+from users.forms import BudgetControlForm, FixedValuesForm
 from users.decorators import unauthenticated_user
 
 
@@ -23,17 +23,17 @@ def budget_control(request):
     result = []
     today_month = datetime.today().month
     months = {0: 'JAN',
-              1: 'FEB',
+              1: 'FEV',
               2: 'MAR',
-              3: 'APR',
-              4: 'MAY',
+              3: 'ABR',
+              4: 'MAI',
               5: 'JUN',
               6: 'JUL',
-              7: 'AUG',
-              8: 'SEP',
-              9: 'OCT',
+              7: 'AGO',
+              8: 'SET',
+              9: 'OUT',
               10: 'NOV',
-              11: 'DEC'
+              11: 'DEZ'
     }
     #gets the actual user
     actual_user = request.user
@@ -85,7 +85,7 @@ def budget_control(request):
     })
 
 @unauthenticated_user
-def add_record(request):
+def add_record(request, pk):
     '''
     AddRecordFormSet = inlineformset_factory(User,
                                              BudgetControl,
@@ -94,23 +94,49 @@ def add_record(request):
                                                      'category',
                                                      'value',
                                                      'month'))
-    record = User.objects.get(id=pk)
     '''
-    record = BudgetControl(user=request.user)
-    #formset = AddRecordFormSet(instance=record)
-    form = BudgetControlForm(instance=record)
+    record = User.objects.get(id=pk)
+    form = FixedValuesForm(instance=record)
+
     if request.method == "POST":
-        form = BudgetControlForm(request.POST, instance=record)
-        #formset = AddRecordFormSet(request.POST, instance=record)
+        form = FixedValuesForm(request.POST, instance=record)
         if form.is_valid():
             form.save()
             return redirect('budget')
 
-    context = {'form':form,
-               'operation_type':'Add'
-    }
+    context = {'form':form,'record':record}
+
     return render(request, 'first_app/add_records.html', context)
 
+    # tem que ver o video 11 do you tube para tentar passar o id na chamada da url do add na navbar
+
+    #para trazer os registros do banco de dados apenas
+    '''
+    #gets record from the database
+    fixed_registers = FixedValues.objects.filter(user=request.user)
+
+    return render(request, 'first_app/add_records.html', {
+        'registers' : fixed_registers
+    })
+    '''
+    #para abrir um campo de inserção apenas
+    '''
+    record = FixedValues(user=request.user)
+    #formset = AddRecordFormSet(instance=record)
+    forms = FixedValuesForm(instance=record)
+    if request.method == "POST":
+        forms = FixedValuesForm(request.POST, instance=record)
+        #formset = AddRecordFormSet(request.POST, instance=record)
+        if forms.is_valid():
+            forms.save()
+            return redirect('budget')
+
+    context = {'forms':forms}
+
+    return render(request, 'first_app/add_records.html', context)
+    '''
+
+#O update agora tem que ser feito em uma janela diferente
 @unauthenticated_user
 def update_record(request, pk):
     record = BudgetControl.objects.get(id=pk)

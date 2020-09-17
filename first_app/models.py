@@ -5,24 +5,24 @@ from datetime import datetime
 class BudgetControl(models.Model):
     today_month = datetime.today().month
     months = [
-        ('JAN', 'JANUARY'),
-        ('FEB', 'FEBRUARY'),
-        ('MAR', 'MARCH'),
-        ('APR', 'APRIL'),
-        ('MAY', 'MAY'),
-        ('JUN', 'JUNE'),
-        ('JUL', 'JULY'),
-        ('AUG', 'AUGUST'),
-        ('SEP', 'SEPTEMBER'),
-        ('OCT', 'OCTOBER'),
-        ('NOV', 'NOVEMBER'),
-        ('DEC', 'DECEMBER')
+        ('JAN', 'JANEIRO'),
+        ('FEV', 'FEVEREIRO'),
+        ('MAR', 'MARÇO'),
+        ('ABR', 'ABRIL'),
+        ('MAI', 'MAIO'),
+        ('JUN', 'JUNHO'),
+        ('JUL', 'JULHO'),
+        ('AGO', 'AGOSTO'),
+        ('SET', 'SETEMBRO'),
+        ('OUT', 'OUTUBRO'),
+        ('NOV', 'NOVEMBRO'),
+        ('DEZ', 'DEZEMBRO')
     ]
     categories = [
-        ('Profit', 'PROFIT'),
-        ('Spend', 'SPEND'),
-        ('Investment', 'INVESTMENT'),
-        ('Good', 'GOOD')
+        ('RECEITA', 'RECEITA'),
+        ('GASTO', 'GASTO'),
+        ('INVESTIMENTO', 'INVESTIMENTO'),
+        ('BEM', 'BEM')
     ]
 
     user = models.ForeignKey(
@@ -35,7 +35,7 @@ class BudgetControl(models.Model):
         null=True
     )
     category = models.CharField(
-        max_length=10,
+        max_length=12,
         choices=categories,
         null=True
     )
@@ -48,6 +48,50 @@ class BudgetControl(models.Model):
         choices=months,
         null=True,
         default=months[today_month-1][0]
+    )
+    date_created = models.DateTimeField(
+        auto_now_add=True,
+        null=True
+    )
+
+    def __str__(self):
+        return self.name
+
+class FixedValues(models.Model):
+    categories = [
+        ('RECEITA', 'RECEITA'),
+        ('GASTO', 'GASTO'),
+        ('INVESTIMENTO', 'INVESTIMENTO'),
+        ('BEM', 'BEM')
+    ]
+    fixed_choices = [
+        ('VARIÁVEL', 'VARIÁVEL'),
+        ('FIXO', 'FIXO')
+    ]
+
+    user = models.ForeignKey(
+        User, 
+        null=True, 
+        on_delete=models.CASCADE
+    )
+    name = models.CharField(
+        max_length=255,
+        null=True
+    )
+    category = models.CharField(
+        max_length=12,
+        choices=categories,
+        null=True
+    )
+    value = models.FloatField(
+        #default=0.0,
+        null=True
+    )
+    fixed = models.CharField(
+        max_length=12,
+        choices=fixed_choices,
+        null=True,
+        default=fixed_choices[0][0]
     )
     date_created = models.DateTimeField(
         auto_now_add=True,

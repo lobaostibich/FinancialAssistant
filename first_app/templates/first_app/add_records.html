@@ -27,19 +27,22 @@
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Fixo ou variável?</th>
                                 <th scope="col">Valor</th>
-                                <th scope="col">Mês</th>
                                 <th style="color:red" scope="col">Deletar Linha</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Salário Empresa 1</td>
-                                <td>Receita</td>
-                                <td>Fixo</td>
-                                <td>4000</td>
-                                <td>Agosto</td>
-                                <td><button class="delete-row" onclick="deleteRow(this)"><img id="trash" src="{% static 'images/delete.png' %}" width="24" height="24"></button></td>
-                            </tr>
+                        <tbody>                            
+                            {% for register in registers %}
+                                <p style="display:none;">
+                                    {{register.user}}
+                                </p>
+                                <tr>
+                                    <td>{{register.name}}</td>
+                                    <td>{{register.category}}</td>
+                                    <td>{{register.fixed}}</td>
+                                    <td>{{register.value}}</td>
+                                    <td><button class="delete-row" onclick="deleteRow(this)"><img id="trash" src="{% static 'images/delete.png' %}" width="24" height="24"></button></td>
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
