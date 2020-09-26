@@ -17,6 +17,7 @@
     <div class="col">
         <form method="POST" action="">
             {% csrf_token %}
+            {{ formset.management_form }}
 
             <div class="col-md">
                 <div class="table-responsive">
@@ -27,20 +28,30 @@
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Fixo ou variável?</th>
                                 <th scope="col">Valor</th>
-                                <th style="color:red" scope="col">Deletar Linha</th>
+                                <th style="color:red; text-align: center;" scope="col">Deletar Linha</th>
                             </tr>
                         </thead>
-                        <tbody>                            
-                            {% for register in registers %}
-                                <p style="display:none;">
-                                    {{register.user}}
-                                </p>
+                        <tbody>
+                            {% for form in formset %}
                                 <tr>
-                                    <td>{{register.name}}</td>
-                                    <td>{{register.category}}</td>
-                                    <td>{{register.fixed}}</td>
-                                    <td>{{register.value}}</td>
-                                    <td><button class="delete-row" onclick="deleteRow(this)"><img id="trash" src="{% static 'images/delete.png' %}" width="24" height="24"></button></td>
+                                    <td style="display:none;">
+                                        {{form.id}}
+                                    </td>
+                                    <td>
+                                        {{form.name}}
+                                    </td>
+                                    <td>
+                                        {{form.category}}
+                                    </td>
+                                    <td>
+                                        {{form.fixed}}
+                                    </td>
+                                    <td>
+                                        {{form.value}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        {{form.DELETE}}
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -49,16 +60,17 @@
             </div>
             <div class="d-flex justify-content-center links">
                 <a class="ml-2">
-                    <button type="button" class="btn btn-info" onclick="addRow()">
-                        Adicionar Linha
-                    </button>
-                </a>
-            </div>
-            <div class="d-flex justify-content-center links">
-                <a href="" class="ml-2">
                     <div class="d-flex justify-content-center mt-3 login_container">
                         <input class="btn btn-success" type="submit" value="Salvar Registros">
                     </div>
+                </a>
+            </div>
+            <br>
+            <div class="d-flex justify-content-center links">
+                <a href="{% url 'budget' %}" class="ml-2">
+                    <button type="button" class="btn btn-info">
+                        Visualizar Dashboard
+                    </button>
                 </a>
             </div>
             <br>
@@ -66,6 +78,6 @@
     </div>
 </div>
 
-<script src="{% static '/js/add_delete_row.js' %}"></script>
+<!-- <script src="{% static '/js/add_delete_row.js' %}"></script> -->
 
 {% endblock %}

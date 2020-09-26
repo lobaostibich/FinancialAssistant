@@ -40,7 +40,6 @@ class BudgetControl(models.Model):
         null=True
     )
     value = models.FloatField(
-        #default=0.0,
         null=True
     )
     month = models.CharField(
@@ -84,14 +83,12 @@ class FixedValues(models.Model):
         null=True
     )
     value = models.FloatField(
-        #default=0.0,
         null=True
     )
     fixed = models.CharField(
         max_length=12,
         choices=fixed_choices,
-        null=True,
-        default=fixed_choices[0][0]
+        null=True
     )
     date_created = models.DateTimeField(
         auto_now_add=True,

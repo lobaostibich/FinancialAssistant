@@ -10,15 +10,17 @@ function addRow() {
 
     var newRow = table.insertRow(table.rows.length);
 
-    var cel1 = newRow.insertCell(0);
+    var cel1 = newRow.insertCell(0).style.display="none";
     var cel2 = newRow.insertCell(1);
     var cel3 = newRow.insertCell(2);
     var cel4 = newRow.insertCell(3);
     var cel5 = newRow.insertCell(4);
+    var cel6 = newRow.insertCell(5);
 
-    cel1.innerHTML = "linha 1";
-    cel2.innerHTML = "linha 2";
-    cel3.innerHTML = "linha 3";
-    cel4.innerHTML = "linha 4";
-    cel5.innerHTML = "<button class='delete-row' onclick='deleteRow(this)'><img id='trash' src='/static/images/delete.png' width='24' height='24'></button>";
+    cel1.innerHTML = "{{form.id}}";
+    cel2.innerHTML = "{{form.name}}";
+    cel3.innerHTML = "{{form.category}}";
+    cel4.innerHTML = "{{form.fixed}}";
+    cel5.innerHTML = "{{form.value}}";
+    cel6.innerHTML = "{{form.DELETE}}";
 }

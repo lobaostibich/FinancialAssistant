@@ -8,13 +8,17 @@ from django.db.models import Sum
 
 from first_app.models import BudgetControl, FixedValues
 from users.forms import BudgetControlForm, FixedValuesForm
+from django.forms import inlineformset_factory
 from users.decorators import unauthenticated_user
 
 
 @unauthenticated_user
 def help_view(request):
+    user_id = request.user.id
+
     context = {
-        'username':request.user.username.capitalize()
+        'username':request.user.username.capitalize(),
+        'id': user_id
     }
     return render(request, 'first_app/help.html', context)
 
@@ -85,56 +89,32 @@ def budget_control(request):
     })
 
 @unauthenticated_user
-def add_record(request, pk):
-    '''
+def add_record(request, user_id):
+    user = User.objects.get(pk=user_id)
+
     AddRecordFormSet = inlineformset_factory(User,
-                                             BudgetControl,
-                                             extra=10,
+                                             FixedValues,
+                                             extra=1,
+                                             can_delete=True,
                                              fields=('name',
                                                      'category',
                                                      'value',
-                                                     'month'))
-    '''
-    record = User.objects.get(id=pk)
-    form = FixedValuesForm(instance=record)
+                                                     'fixed'))
 
     if request.method == "POST":
-        form = FixedValuesForm(request.POST, instance=record)
-        if form.is_valid():
-            form.save()
-            return redirect('budget')
+        formset = AddRecordFormSet(request.POST, instance=user)
+        if formset.is_valid():
+            formset.save()
+            return redirect('add', user_id=user.id)
+        else:
+            #parte para imprimir no terminal se houver algum erro na validação do formset
+            print(formset.errors)
 
-    context = {'form':form,'record':record}
+    formset = AddRecordFormSet(instance=user)
 
-    return render(request, 'first_app/add_records.html', context)
-
-    # tem que ver o video 11 do you tube para tentar passar o id na chamada da url do add na navbar
-
-    #para trazer os registros do banco de dados apenas
-    '''
-    #gets record from the database
-    fixed_registers = FixedValues.objects.filter(user=request.user)
-
-    return render(request, 'first_app/add_records.html', {
-        'registers' : fixed_registers
-    })
-    '''
-    #para abrir um campo de inserção apenas
-    '''
-    record = FixedValues(user=request.user)
-    #formset = AddRecordFormSet(instance=record)
-    forms = FixedValuesForm(instance=record)
-    if request.method == "POST":
-        forms = FixedValuesForm(request.POST, instance=record)
-        #formset = AddRecordFormSet(request.POST, instance=record)
-        if forms.is_valid():
-            forms.save()
-            return redirect('budget')
-
-    context = {'forms':forms}
+    context = {'formset': formset}
 
     return render(request, 'first_app/add_records.html', context)
-    '''
 
 #O update agora tem que ser feito em uma janela diferente
 @unauthenticated_user
