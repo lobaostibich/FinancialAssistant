@@ -21,8 +21,7 @@ class BudgetControl(models.Model):
     categories = [
         ('RECEITA', 'RECEITA'),
         ('GASTO', 'GASTO'),
-        ('INVESTIMENTO', 'INVESTIMENTO'),
-        ('BEM', 'BEM')
+        ('INVESTIMENTO', 'INVESTIMENTO')
     ]
 
     user = models.ForeignKey(
@@ -60,8 +59,7 @@ class FixedValues(models.Model):
     categories = [
         ('RECEITA', 'RECEITA'),
         ('GASTO', 'GASTO'),
-        ('INVESTIMENTO', 'INVESTIMENTO'),
-        ('BEM', 'BEM')
+        ('INVESTIMENTO', 'INVESTIMENTO')
     ]
     fixed_choices = [
         ('VARIÁVEL', 'VARIÁVEL'),
