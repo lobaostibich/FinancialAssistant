@@ -1,5 +1,3 @@
-import pdb
-
 from datetime import datetime
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -13,17 +11,34 @@ from django.forms import inlineformset_factory
 from users.decorators import unauthenticated_user
 
 
+#variável criada para poder fazer a alteração na página de output caso novos dados tenham sido inseridos
+organize_data = False
+
 @unauthenticated_user
 def help_view(request):
-    user_id = request.user.id
 
-    context = {
-        'username':request.user.username.capitalize(),
-        'id': user_id
-    }
+    context = {'username':request.user.username.capitalize()}
+
     return render(request, 'first_app/help.html', context)
 
-def organize_data(months, today_month, request):
+#pega os dados que vieram da inserção facilitada(que possui os dados fixos e cria novos registros na tabela BudgetControl em cima desses dados)
+def organize_data(request):
+
+    today_month = datetime.today().month
+    months = {0: 'JAN',
+              1: 'FEV',
+              2: 'MAR',
+              3: 'ABR',
+              4: 'MAI',
+              5: 'JUN',
+              6: 'JUL',
+              7: 'AGO',
+              8: 'SET',
+              9: 'OUT',
+              10: 'NOV',
+              11: 'DEZ'
+    }
+
     #pegando usuário atual
     actual_user = request.user
     #buscando dados da tabela de dados fixos que são do usuário logado
@@ -37,14 +52,16 @@ def organize_data(months, today_month, request):
                 name=element.name,
                 category=element.category,
                 value=element.value,
-                month=months[today_month],
+                month=months[today_month-1],
                 user=element.user
             )
 
-    #depois apagar todos os dados que possuem valor variável da fixedValues
-    variable_values = FixedValues.objects.filter(user=actual_user, fixed="VARIÁVEL")
+        #depois apagar todos os dados que possuem valor variável da fixedValues
+        variable_values = FixedValues.objects.filter(user=actual_user, fixed="VARIÁVEL")
 
-    variable_values.delete()
+        variable_values.delete()
+
+    return render(request, 'first_app/organize.html')
 
 @unauthenticated_user
 def budget_control(request):
@@ -64,17 +81,42 @@ def budget_control(request):
               11: 'DEZ'
     }
 
-    #pega os dados que vieram da inserção facilitada(que possui os dados fixos e cria novos registros na tabela BudgetControl em cima desses dados)
-    organize_data(months, today_month, request)
+    #essa parte trabalha em cima da tabela que fica na parte inferior da página, onde é possível adicionar, editar e remover dados dinamicamente
+    user = User.objects.get(pk=request.user.id)
+
+    BudgetControlFormSet = inlineformset_factory(User,
+                                             BudgetControl,
+                                             extra=1,
+                                             can_delete=True,
+                                             fields=('name',
+                                                     'category',
+                                                     'value',
+                                                     'month'))
+
+    if request.method == "POST":
+        formset = BudgetControlFormSet(request.POST, instance=user)
+        if formset.is_valid():
+            formset.save()
+
+            return redirect('budget')
+        else:
+            #parte para imprimir no terminal se houver algum erro na validação do formset
+            print(formset.errors)
+
+    formset = BudgetControlFormSet(instance=user)
+    #vai até aqui a parte da tabela dinâmicamente alterada
 
     #gets the actual user
     actual_user = request.user
     #gets record from the database
     budget_registers = BudgetControl.objects.filter(user=actual_user)
+
     #calculates the sum of the profits
     profits_sum = budget_registers.filter(category='RECEITA').aggregate(Sum('value'))['value__sum']
     #calculates the investments total value
-    investments_sum = budget_registers.filter(category='INVESTIMENTO', month=months[today_month-1]).aggregate(Sum('value'))['value__sum']
+    investments_sum = budget_registers.filter(category='INVESTIMENTO', month=months[today_month-1]).aggregate(Sum('value'))['value__sum']    
+    #calculates the annual total spends
+    spends_sum = budget_registers.filter(category='GASTO').aggregate(Sum('value'))['value__sum']
     
     #calculates the total profit, total spends and sum for each month
     for month in range(12):
@@ -86,9 +128,6 @@ def budget_control(request):
         if spends:
             result[month][1] = int(spends)
         result[month][2] = result[month][0]-result[month][1]
-
-    #calculates the annual total spends
-    spends_sum = budget_registers.filter(category='GASTO').aggregate(Sum('value'))['value__sum']
 
     #check if the investments_sum is an empty value
     if investments_sum:
@@ -109,19 +148,17 @@ def budget_control(request):
         profits_sum = 0
 
     return render(request, 'first_app/budget_control.html', {
-        'budget_registers':budget_registers,
-        'spends_sum':spends_sum,
+        'formset': formset,
+        'spends_sum': spends_sum,
         'profits_sum': profits_sum,
         'investments_sum':investments_sum,
-        'result':result,
-        'id': actual_user.id
+        'result': result
     })
 
 @unauthenticated_user
-def add_record(request, user_id):
-    user_id = request.user.id
+def add_record(request):
 
-    user = User.objects.get(pk=user_id)
+    user = User.objects.get(pk=request.user.id)
 
     AddRecordFormSet = inlineformset_factory(User,
                                              FixedValues,
@@ -136,47 +173,52 @@ def add_record(request, user_id):
         formset = AddRecordFormSet(request.POST, instance=user)
         if formset.is_valid():
             formset.save()
-            return redirect('add', user_id=user.id)
+
+            return redirect('add')
         else:
             #parte para imprimir no terminal se houver algum erro na validação do formset
             print(formset.errors)
 
     formset = AddRecordFormSet(instance=user)
 
-    context = {
-        'formset': formset,
-        'id': user_id
-    }
+    context = {'formset': formset}
 
     return render(request, 'first_app/add_records.html', context)
 
+'''
 #O update agora tem que ser feito em uma janela diferente
 @unauthenticated_user
 def update_record(request, pk):
+
     record = BudgetControl.objects.get(id=pk)
+
     form = BudgetControlForm(instance=record)
+
     if request.method == "POST":
         form = BudgetControlForm(request.POST, instance=record)
         if form.is_valid():
             form.save()
+
             return redirect('budget')
 
     context = {
-        'form':form,
-        'operation_type':'Update'
+        'form': form,
+        'operation_type': 'Update'
     }
+
     return render(request, 'first_app/add_records.html', context)
 
 @unauthenticated_user
 def delete_record(request, pk):
-    user_id = request.user.id
+
     record = BudgetControl.objects.get(id=pk)
+
     if request.method == "POST":
         record.delete()
+
         return redirect("budget")
 
-    context = {
-        'item':record,
-        'id': user_id
-    }
+    context = {'item':record}
+
     return render(request, "first_app/delete.html", context)
+'''

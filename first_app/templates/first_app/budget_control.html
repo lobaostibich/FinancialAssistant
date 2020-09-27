@@ -62,39 +62,67 @@
 <br>
 <div class="row">
     <div class="col">
-        <div class="col-md">
-            <h5>
-                Tabela dos Registros Orçamentários:
-            </h5>
-            <hr>
-            <div class="table-responsive">
-                <a class="btn btn-primary btn-hover btn-block" href="">
-                    Adicionar registros
-                </a>
-                <table class="table table-dark">
-                    <tr>
-                        <th>Nome</th>
-                        <th>Categoria</th>
-                        <th>Valor</th>
-                        <th>Mês</th>
-                        <th>Atualizar</th>
-                        <th>Remover</th>
-                    </tr>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ formset.management_form }}
 
-                    {% for register in budget_registers %}
-                        <tr>
-                            <td>{{register.name}}</td>
-                            <td>{{register.category}}</td>
-                            <td>{{register.value}}</td>
-                            <td>{{register.month}}</td>
-                            <td><a class="btn btn-sm btn-info" href="{% url 'update' register.id %}">Update</a></td>
-                            <td><a class="btn btn-sm btn-danger" href="{% url 'delete' register.id %}">Delete</a></td>
-                        </tr>
-                    {% endfor %}
-
-                </table>
+            <div class="col-md">
+                <h5>
+                    Tabela dos Registros Orçamentários:
+                </h5>
+                <hr>
+                <div class="table-responsive">
+                    <!--
+                    <a class="btn btn-primary btn-hover btn-block" href="">
+                        Adicionar registros
+                    </a>
+                    -->
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Mês</th>
+                                <th style="color:red; text-align: center;" scope="col">Deletar Linha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for form in formset %}
+                                <tr>
+                                    <td style="display:none;">
+                                        {{form.id}}
+                                    </td>
+                                    <td>
+                                        {{form.name}}
+                                    </td>
+                                    <td>
+                                        {{form.category}}
+                                    </td>
+                                    <td>
+                                        {{form.value}}
+                                    </td>
+                                    <td>
+                                        {{form.month}}
+                                    </td>
+                                    <td style="text-align: center;">
+                                        {{form.DELETE}}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+            <div class="d-flex justify-content-center links">
+                <a class="ml-2">
+                    <div class="d-flex justify-content-center mt-3 login_container">
+                        <input class="btn btn-success" type="submit" value="Salvar Registros">
+                    </div>
+                </a>
+            </div>
+            <br>
+        </form>
     </div>
 </div>
 
