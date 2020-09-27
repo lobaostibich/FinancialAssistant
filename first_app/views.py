@@ -22,6 +22,7 @@ def help_view(request):
     return render(request, 'first_app/help.html', context)
 
 #pega os dados que vieram da inserção facilitada(que possui os dados fixos e cria novos registros na tabela BudgetControl em cima desses dados)
+@unauthenticated_user
 def organize_data(request):
 
     today_month = datetime.today().month
@@ -106,19 +107,19 @@ def budget_control(request):
     formset = BudgetControlFormSet(instance=user)
     #vai até aqui a parte da tabela dinâmicamente alterada
 
-    #gets the actual user
+    #pega o usuário atualmente logado
     actual_user = request.user
-    #gets record from the database
+    #pega os registros do banco de dados
     budget_registers = BudgetControl.objects.filter(user=actual_user)
 
-    #calculates the sum of the profits
+    #calcula a soma total das receitas
     profits_sum = budget_registers.filter(category='RECEITA').aggregate(Sum('value'))['value__sum']
-    #calculates the investments total value
+    #calcula a soma dos investimentos no mês atual
     investments_sum = budget_registers.filter(category='INVESTIMENTO', month=months[today_month-1]).aggregate(Sum('value'))['value__sum']    
-    #calculates the annual total spends
+    #calcula a soma total dos gastos
     spends_sum = budget_registers.filter(category='GASTO').aggregate(Sum('value'))['value__sum']
     
-    #calculates the total profit, total spends and sum for each month
+    #calcula a soma total mensal da receita, gastos e o que sobra quando descontamos os gastos das receitas
     for month in range(12):
         result.append([0,0,0])
         profits = budget_registers.filter(category='RECEITA', month=months[month]).aggregate(Sum('value'))['value__sum']
@@ -129,19 +130,19 @@ def budget_control(request):
             result[month][1] = int(spends)
         result[month][2] = result[month][0]-result[month][1]
 
-    #check if the investments_sum is an empty value
+    #checa se a soma de investimentos é um valor vazio, se for coloca 0
     if investments_sum:
         investments_sum = int(investments_sum)
     else:
         investments_sum = 0
 
-    #check if the spends_sum is an empty value
+    #checa se a soma de gastos é um valor vazio, se for coloca 0
     if spends_sum:
         spends_sum = int(spends_sum)
     else:
         spends_sum = 0
 
-    #check if the profits_sum is an empty value
+    #checa se a soma de receitas é um valor vazio, se for coloca 0
     if profits_sum:
         profits_sum = int(profits_sum)
     else:
@@ -184,41 +185,3 @@ def add_record(request):
     context = {'formset': formset}
 
     return render(request, 'first_app/add_records.html', context)
-
-'''
-#O update agora tem que ser feito em uma janela diferente
-@unauthenticated_user
-def update_record(request, pk):
-
-    record = BudgetControl.objects.get(id=pk)
-
-    form = BudgetControlForm(instance=record)
-
-    if request.method == "POST":
-        form = BudgetControlForm(request.POST, instance=record)
-        if form.is_valid():
-            form.save()
-
-            return redirect('budget')
-
-    context = {
-        'form': form,
-        'operation_type': 'Update'
-    }
-
-    return render(request, 'first_app/add_records.html', context)
-
-@unauthenticated_user
-def delete_record(request, pk):
-
-    record = BudgetControl.objects.get(id=pk)
-
-    if request.method == "POST":
-        record.delete()
-
-        return redirect("budget")
-
-    context = {'item':record}
-
-    return render(request, "first_app/delete.html", context)
-'''

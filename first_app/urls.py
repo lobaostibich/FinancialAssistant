@@ -6,7 +6,5 @@ urlpatterns = [
     path("dashboard/", views.budget_control, name="budget"),
     path("add_record/", views.add_record, name="add"),
     path("organize/", views.organize_data, name="organize"),
-    #path("update_record/<str:pk>/", views.update_record, name="update"),
-    #path("delete_record/<str:pk>/", views.delete_record, name="delete"),
     path("help/", views.help_view, name="help")
 ]

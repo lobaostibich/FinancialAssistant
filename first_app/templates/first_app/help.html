@@ -29,44 +29,104 @@
                             <th scope="col">Categoria</th>
                             <th scope="col">Fixo ou variável?</th>
                             <th scope="col">Valor</th>
-                            <th style="color:red" scope="col">Deletar Linha</th>
+                            <th style="color:red; text-align: center;" scope="col">Deletar Linha</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Salário Empresa 1</td>
-                            <td>Receita</td>
-                            <td>Fixo</td>
-                            <td>4000</td>
-                            <td><input type="checkbox" disabled></td>
+                            <td>
+                                <input type="text" value="Salário Empresa 1" disabled>
+                            </td>
+                            <td>
+                                <select disabled>
+                                    <option value="RECEITA">RECEITA</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select disabled>
+                                    <option value="FIXO">FIXO</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" value="4000.0" disabled>
+                            </td>
+                            <td style="text-align: center;"><input type="checkbox" disabled></td>
                         </tr>
                         <tr>
-                            <td>Venda de doces</td>
-                            <td>Receita</td>
-                            <td>Variável</td>
-                            <td>1000</td>
-                            <td><input type="checkbox" disabled></td>
+                            <td>
+                                <input type="text" value="Venda de doces" disabled>
+                            </td>
+                            <td>
+                                <select disabled>
+                                    <option value="RECEITA">RECEITA</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select disabled>
+                                    <option value="VARIÁVEL">VARIÁVEL</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" value="1000.0" disabled>
+                            </td>
+                            <td style="text-align: center;"><input type="checkbox" disabled></td>
                         </tr>
                         <tr>
-                            <td>Aluguel</td>
-                            <td>Despesa</td>
-                            <td>Fixo</td>
-                            <td>2000</td>
-                            <td><input type="checkbox" disabled></td>
+                            <td>
+                                <input type="text" value="Aluguel" disabled>
+                            </td>
+                            <td>
+                                <select disabled>
+                                    <option value="DESPESA">DESPESA</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select disabled>
+                                    <option value="FIXO">FIXO</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" value="1500.0" disabled>
+                            </td>
+                            <td style="text-align: center;"><input type="checkbox" disabled></td>
                         </tr>
                         <tr>
-                            <td>CDB Banco X</td>
-                            <td>Investimento</td>
-                            <td>Variável</td>
-                            <td>500</td>
-                            <td><input type="checkbox" disabled></td>
+                            <td>
+                                <input type="text" value="CDB Banco X" disabled>
+                            </td>
+                            <td>
+                                <select disabled>
+                                    <option value="INVESTIMENTO">INVESTIMENTO</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select disabled>
+                                    <option value="VARIÁVEL">VARIÁVEL</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" value="500.0" disabled>
+                            </td>
+                            <td style="text-align: center;"><input type="checkbox" disabled></td>
                         </tr>
                         <tr>
-                            <td>Carro</td>
-                            <td>Bem</td>
-                            <td>Fixo</td>
-                            <td>45000</td>
-                            <td><input type="checkbox" disabled></td>
+                            <td>
+                                <input type="text" value="" disabled>
+                            </td>
+                            <td>
+                                <select disabled>
+                                    <option value="---------">---------</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select disabled>
+                                    <option value="---------">---------</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" value="" disabled>
+                            </td>
+                            <td style="text-align: center;"><input type="checkbox" disabled></td>
                         </tr>
                     </tbody>
                 </table>
@@ -76,6 +136,14 @@
             <a href="" class="ml-2">
                 <button type="button" class="btn btn-success" disabled>
                     Salvar Registros
+                </button>
+            </a>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center links">
+            <a href="" class="ml-2">
+                <button type="button" class="btn btn-info" disabled>
+                    Concluir Inserção
                 </button>
             </a>
         </div>
@@ -99,7 +167,7 @@
                     <div class="d-flex justify-content-between align-items-center w-100">
                         <strong class="text-gray-dark">Deletar Linha</strong>
                     </div>
-                    <span class="d-block">Ao clicar na lixeira que aparece na coluna deletar linha, você apaga a linha</span>
+                    <span class="d-block">Para deletar algum dado, basta marcar a caixinha na linha do dado que se deseja excluir, na coluna "Deletar Linha", clicar no botão "Salvar Registros" e depois clicar em "Concluir Inserção"</span>
                 </div>
             </div>
             <div class="media text-muted pt-3">
@@ -113,17 +181,18 @@
             <div class="media text-muted pt-3">
                 <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <div class="d-flex justify-content-between align-items-center w-100">
-                        <strong class="text-gray-dark">Adicionar Linha</strong>
+                        <strong class="text-gray-dark">Salvar Registros</strong>
                     </div>
-                    <span class="d-block">Ao clicar no botão "Adicionar Linha" você adiciona uma nova linha de inserção de dados</span>
+                    <span class="d-block">Ao clicar em salvar registros, os registros são processados para que você possa visualizar os dados no dashboard e uma nova linha é criada para que caso você 
+                        queira incluir um novo dado, basta preencher essa linha, se não quiser preencher mais nenhuma informação basta clicar no botão "Concluir Inserção". </span>
                 </div>
             </div>
             <div class="media text-muted pt-3">
                 <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <div class="d-flex justify-content-between align-items-center w-100">
-                        <strong class="text-gray-dark">Salvar Registros</strong>
+                        <strong class="text-gray-dark">Concluir Inserção</strong>
                     </div>
-                    <span class="d-block">Ao clicar em salvar registros, os registros são processados para que você possa visualizar os dados no dashboard</span>
+                    <span class="d-block">Ao clicar no botão "Concluir Inserção" você já pode ir para a visualização de dados, onde poderá controlar com detalhes suas finanças pessoais</span>
                 </div>
             </div>
         </div>
