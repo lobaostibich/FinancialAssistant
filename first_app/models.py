@@ -5,18 +5,18 @@ from datetime import datetime
 class BudgetControl(models.Model):
     today_month = datetime.today().month
     months = [
-        ('JAN', 'JANEIRO'),
-        ('FEV', 'FEVEREIRO'),
-        ('MAR', 'MARÇO'),
-        ('ABR', 'ABRIL'),
-        ('MAI', 'MAIO'),
-        ('JUN', 'JUNHO'),
-        ('JUL', 'JULHO'),
-        ('AGO', 'AGOSTO'),
-        ('SET', 'SETEMBRO'),
-        ('OUT', 'OUTUBRO'),
-        ('NOV', 'NOVEMBRO'),
-        ('DEZ', 'DEZEMBRO')
+        ('JANEIRO', 'JANEIRO'),
+        ('FEVEREIRO', 'FEVEREIRO'),
+        ('MARÇO', 'MARÇO'),
+        ('ABRIL', 'ABRIL'),
+        ('MAIO', 'MAIO'),
+        ('JUNHO', 'JUNHO'),
+        ('JULHO', 'JULHO'),
+        ('AGOSTO', 'AGOSTO'),
+        ('SETEMBRO', 'SETEMBRO'),
+        ('OUTUBRO', 'OUTUBRO'),
+        ('NOVEMBRO', 'NOVEMBRO'),
+        ('DEZEMBRO', 'DEZEMBRO')
     ]
     categories = [
         ('RECEITA', 'RECEITA'),
@@ -42,7 +42,7 @@ class BudgetControl(models.Model):
         null=True
     )
     month = models.CharField(
-        max_length=3,
+        max_length=10,
         choices=months,
         null=True,
         default=months[today_month-1][0]

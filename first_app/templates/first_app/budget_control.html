@@ -71,6 +71,8 @@
                     Tabela dos Registros Orçamentários:
                 </h5>
                 <hr>
+                <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                <br>
                 <div class="table-responsive">
                     <!--
                     <a class="btn btn-primary btn-hover btn-block" href="">
@@ -87,7 +89,7 @@
                                 <th style="color:red; text-align: center;" scope="col">Deletar Linha</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="myTable">
                             {% for form in formset %}
                                 <tr>
                                     <td style="display:none;">
@@ -125,5 +127,24 @@
         </form>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          var test = false;
+          for (i=1;i < $(this).find(":input").length - 1;i++){
+            if ($(this).find(":input")[i].value.toLowerCase().includes(value)){
+                test = true;
+                console.log($(this).find(":input")[i].value.toLowerCase().includes(value));
+                break;
+            }
+          }
+          $(this).toggle(test);
+        });
+      });
+    });
+</script>
 
 {% endblock  %}>
