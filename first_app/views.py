@@ -68,18 +68,18 @@ def organize_data(request):
 def budget_control(request):
     result = []
     today_month = datetime.today().month
-    months = {0: 'JAN',
-              1: 'FEV',
-              2: 'MAR',
-              3: 'ABR',
-              4: 'MAI',
-              5: 'JUN',
-              6: 'JUL',
-              7: 'AGO',
-              8: 'SET',
-              9: 'OUT',
-              10: 'NOV',
-              11: 'DEZ'
+    months = {0: 'JANEIRO',
+              1: 'FEVEREIRO',
+              2: 'MARÇO',
+              3: 'ABRIL',
+              4: 'MAIO',
+              5: 'JUNHO',
+              6: 'JULHO',
+              7: 'AGOSTO',
+              8: 'SETEMBRO',
+              9: 'OUTUBRO',
+              10: 'NOVEMBRO',
+              11: 'DEZEMBRO'
     }
 
     #essa parte trabalha em cima da tabela que fica na parte inferior da página, onde é possível adicionar, editar e remover dados dinamicamente
@@ -115,7 +115,8 @@ def budget_control(request):
     #calcula a soma total das receitas
     profits_sum = budget_registers.filter(category='RECEITA').aggregate(Sum('value'))['value__sum']
     #calcula a soma dos investimentos no mês atual
-    investments_sum = budget_registers.filter(category='INVESTIMENTO', month=months[today_month-1]).aggregate(Sum('value'))['value__sum']    
+    investments_sum = budget_registers.filter(category='INVESTIMENTO', month=months[today_month-1]).aggregate(Sum('value'))['value__sum']
+
     #calcula a soma total dos gastos
     spends_sum = budget_registers.filter(category='GASTO').aggregate(Sum('value'))['value__sum']
     
