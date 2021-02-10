@@ -71,7 +71,13 @@
                     Tabela dos Registros Orçamentários:
                 </h5>
                 <hr>
-                <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                <input class="form-control" id="myInput" type="text" placeholder="Buscar em todos os campos..">
+                <!--
+                <input class="form-control" id="myName" type="text" placeholder="Buscar no campo Nome..">
+                <input class="form-control" id="myCategory" type="text" placeholder="Buscar no campo Categoria..">
+                <input class="form-control" id="myValue" type="text" placeholder="Buscar no campo Valor..">
+                <input class="form-control" id="myMonth" type="text" placeholder="Buscar no campo Mês..">
+                -->
                 <br>
                 <div class="table-responsive">
                     <!--
@@ -130,6 +136,7 @@
 
 <script>
     $(document).ready(function(){
+      //busca em todos os campos
       $("#myInput").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $("#myTable tr").filter(function() {
@@ -144,6 +151,56 @@
           $(this).toggle(test);
         });
       });
+      /*
+      //busca no campo Nome apenas
+      $("#myName").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          var test = false;
+          if ($(this).find(":input")[1].value.toLowerCase().includes(value)){
+            test = true;
+            console.log($(this).find(":input")[1].value.toLowerCase().includes(value));
+          }
+          $(this).toggle(test);
+        });
+      });
+      //busca no campo Categoria apenas
+      $("#myCategory").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          var test = false;
+          if ($(this).find(":input")[2].value.toLowerCase().includes(value)){
+            test = true;
+            console.log($(this).find(":input")[2].value.toLowerCase().includes(value));
+          }
+          $(this).toggle(test);
+        });
+      });
+      //busca no campo Valor apenas
+      $("#myValue").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          var test = false;
+          if ($(this).find(":input")[3].value.toLowerCase().includes(value)){
+            test = true;
+            console.log($(this).find(":input")[3].value.toLowerCase().includes(value));
+          }
+          $(this).toggle(test);
+        });
+      });
+      //busca no campo Mês apenas
+      $("#myMonth").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          var test = false;
+          if ($(this).find(":input")[4].value.toLowerCase().includes(value)){
+            test = true;
+            console.log($(this).find(":input")[4].value.toLowerCase().includes(value));
+          }
+          $(this).toggle(test);
+        });
+      });
+      */
     });
 </script>
 
